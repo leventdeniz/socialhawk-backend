@@ -4,3 +4,7 @@
 index:
     path: /
     defaults: { _controller: 'App\Influencer\Index\Controller\Index' }
+
+xhrTest:
+    path: /ajax
+    defaults: { _controller: 'App\Influencer\Index\Controller\Ajax' }
