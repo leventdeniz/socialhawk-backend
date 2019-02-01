@@ -8,8 +8,17 @@
 
 namespace App\Influencer\Login\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 class Login
 {
+    /**
+     * @return JsonResponse
+     */
+    public function __invoke(){
+
+        return new JsonResponse(['success' => false, 'content' => '']);
+    }
 
 }

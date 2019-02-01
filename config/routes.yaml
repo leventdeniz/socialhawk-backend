@@ -8,3 +8,11 @@ index:
 xhrTest:
     path: /ajax
     defaults: { _controller: 'App\Influencer\Index\Controller\Ajax' }
+
+#########################################################################
+# This is the section to the influencer bundle
+
+influencer_login:
+    path: /influencer/login
+    methods: 'POST'
+    defaults: { _controller: 'App\Influencer\Login\Controller\Login' }
