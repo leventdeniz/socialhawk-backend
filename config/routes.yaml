@@ -16,3 +16,8 @@ influencer_login:
     path: /influencer/login
     methods: 'POST'
     defaults: { _controller: 'App\Influencer\Login\Controller\Login' }
+
+influencer_register:
+    path: /influencer/register
+    methods: 'POST'
+    defaults: { _controller: 'App\Influencer\Register\Controller\Register' }
