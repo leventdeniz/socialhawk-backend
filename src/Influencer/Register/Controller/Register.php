@@ -10,10 +10,16 @@ namespace App\Influencer\Register\Controller;
 
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 
-class Register extends Request
+class Register
 {
+    protected $_database;
+
+    public function __construct()
+    {
+        $this->_database = new \App\Influencer\Register\Model\CreateUser();
+
+    }
 
     public function __invoke(){
 
@@ -25,12 +31,21 @@ class Register extends Request
         }
 
 
-        $email      = $_POST['email'];
-        $password   = $_POST['password'];
-        $uid        = \App\Influencer\Register\Model\UidGenerator::generateUserId($email);
+        $email      =   $_POST['email'];
+        $password   =   $_POST['password'];
+        $uid        =   \App\Influencer\Register\Model\UidGenerator::generateUserId($email);
 
 
-        //These are currently just mock datas, so we can work
+        $registerUser = $this->_database->createNewInfluencerUser($email, $password, $uid);
+
+        if($registerUser === false){
+            return new JsonResponse([
+                'success' => false,
+                'content' => ''
+            ]);
+        }
+
+
         return new JsonResponse([
             'success' => true,
             'content' => [

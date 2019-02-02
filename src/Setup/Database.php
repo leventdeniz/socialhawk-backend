@@ -15,8 +15,8 @@ class Database
     const DATABASE_INFO = [
         'server' => 'localhost',
         'username' => 'root',
-        'password' => 'password',
-        'database' => 'socialstars'
+        'password' => 'password99#',
+        'database' => 'influencer'
     ];
 
     public function connectToDatabase(){
@@ -29,7 +29,7 @@ class Database
         );
 
         if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
+            return false;
         }
 
         return $conn;
