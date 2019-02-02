@@ -13,9 +13,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Register
 {
+
     public function __invoke(){
 
-        return new JsonResponse(['success' => false, 'content' => '']);
+
+
+        //These are currently just mock datas, so we can work
+        return new JsonResponse([
+            'success' => true,
+            'content' => [
+                'uid' => 1337
+            ]]);
     }
 
 }
