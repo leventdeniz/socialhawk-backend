@@ -35,9 +35,17 @@ class Login
 
         //if the user exist, we get the UID, else we get bool
         $getUid = $this->_loginUser->getUserData($email, $password);
+        if($getUid === false){
+            return JsonResponse::returnJsonResponse(
+                false,
+                'Username or password wrong'
+            );
+        }
 
-
-var_dump($getUid);die();
+        return JsonResponse::returnJsonResponse(
+            true,
+            $getUid[0][0]
+        );
 
 
     }
