@@ -2,14 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: kian
- * Date: 02.02.19
- * Time: 11:13
+ * Date: 03.02.19
+ * Time: 13:42
  */
 
 namespace App\Influencer\Register\Model;
 
 
-class CreateUser
+class InfluencerExist
 {
     /**
      * @var \App\Setup\Database
@@ -21,7 +21,11 @@ class CreateUser
         $this->_databaseConnection = new \App\Setup\Database();
     }
 
-    public function createNewInfluencerUser($email, $password, $uid){
+    /**
+     * @param $email
+     * @return bool
+     */
+    public function byEmail($email){
 
         $database = $this->_databaseConnection->connectToDatabase();
         if($database === false){
@@ -30,31 +34,27 @@ class CreateUser
         }
 
         $sql = $database->prepare("
-            INSERT INTO influencer_users(email, password, uid, active)
-            Values(?, ?, ?, ?)
+            SELECT * FROM influencer_users WHERE email=?
         ");
 
 
-        $sql->bind_param("sssi", $a, $b, $c, $d);
-
+        $sql->bind_param("s", $a);
         $a = $email;
-        $b = $password;
-        $c = $uid;
-        $d = 1;
 
+        $sql->execute();
+        $result = $sql->get_result();
 
-        $insert = $sql->execute();
-        if($insert === true){
-            return true;
-        }else{
-            //TODO: Insert logging here for us @kian
+        /**
+         * User does not exist, so we return false
+         * Else we return true, the user does exist.
+         */
+        if($result->num_rows === 0){
             return false;
         }
 
+        return true;
 
 
     }
-
-
 
 }

@@ -13,11 +13,20 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Register
 {
+    /**
+     * @var \App\Influencer\Register\Model\CreateUser
+     */
     protected $_database;
+
+    /**
+     * @var \App\Influencer\Register\Model\InfluencerExist
+     */
+    protected $_userExist;
 
     public function __construct()
     {
         $this->_database = new \App\Influencer\Register\Model\CreateUser();
+        $this->_userExist = new \App\Influencer\Register\Model\InfluencerExist();
 
     }
 
@@ -34,6 +43,19 @@ class Register
         $email      =   $_POST['email'];
         $password   =   $_POST['password'];
         $uid        =   \App\Influencer\Register\Model\UidGenerator::generateUserId($email);
+
+
+        $checkIfUserExist = $this->_userExist->byEmail($email);
+
+        /**
+         * The user does exist, we the user can't sign up
+         */
+        if($checkIfUserExist === true){
+            return new JsonResponse([
+                'success' => false,
+                'content' => 'E-Mail exist'
+            ]);
+        }
 
 
         $registerUser = $this->_database->createNewInfluencerUser($email, $password, $uid);
