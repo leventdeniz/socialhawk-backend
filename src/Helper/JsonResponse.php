@@ -9,18 +9,16 @@
 namespace App\Helper;
 
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-
-class JsonResponseHelper
+class JsonResponse
 {
     /**
      * @param bool $success
      * @param array $content
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function returnJsonResponse($success, $content)
+    public static function returnJsonResponse($success, $content)
     {
-        return new JsonResponse([
+        return \Symfony\Component\HttpFoundation\JsonResponse::create([
             'success' => (bool)$success,
             'content' => (array)$content
         ]);
