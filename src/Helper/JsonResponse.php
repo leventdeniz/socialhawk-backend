@@ -13,14 +13,14 @@ class JsonResponse
 {
     /**
      * @param bool $success
-     * @param array $content
+     * @param mixed $content
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public static function returnJsonResponse($success, $content)
     {
         return \Symfony\Component\HttpFoundation\JsonResponse::create([
             'success' => (bool)$success,
-            'content' => (array)$content
+            'content' => $content
         ]);
     }
 }

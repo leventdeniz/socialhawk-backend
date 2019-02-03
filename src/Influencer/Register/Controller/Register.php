@@ -9,10 +9,10 @@
 namespace App\Influencer\Register\Controller;
 
 
+use App\Helper\JsonResponse;
 use App\Influencer\Register\Model\CreateUser;
 use App\Influencer\Register\Model\InfluencerExist;
 use App\Influencer\Register\Model\UidGenerator;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Register
 {
@@ -37,10 +37,10 @@ class Register
     {
 
         if ((!isset($_POST['email'])) || (!isset($_POST['password']))) {
-            return new JsonResponse([
-                'success' => false,
-                'content' => 'Not all fields are set'
-            ]);
+            return JsonResponse::returnJsonResponse(
+                false,
+                'Not all fields are set'
+            );
         }
 
         $email = $_POST['email'];
@@ -53,26 +53,24 @@ class Register
          * The user does exist, we the user can't sign up
          */
         if ($checkIfUserExist === true) {
-            return new JsonResponse([
-                'success' => false,
-                'content' => 'E-Mail exist'
-            ]);
+            return JsonResponse::returnJsonResponse(
+                false,
+                'E-Mail exist'
+            );
         }
 
         $registerUser = $this->_database->createNewInfluencerUser($email, $password, $uid);
 
         if ($registerUser === false) {
-            return new JsonResponse([
-                'success' => false,
-                'content' => ''
-            ]);
+            return JsonResponse::returnJsonResponse(
+                false,
+                ''
+            );
         }
 
-        return new JsonResponse([
-                'success' => true,
-                'content' => [
-                    'uid' => $uid
-                ]]
+        return JsonResponse::returnJsonResponse(
+            true,
+            ['uid' => $uid]
         );
     }
 
