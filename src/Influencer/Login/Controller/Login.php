@@ -8,17 +8,38 @@
 
 namespace App\Influencer\Login\Controller;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
 
+use App\Helper\JsonResponse;
 
 class Login
 {
-    /**
-     * @return JsonResponse
-     */
+    protected $_loginUser;
+
+    public function __construct()
+    {
+        $this->_loginUser = new \App\Influencer\Login\Model\LoginUser();
+    }
+
+
     public function __invoke(){
 
-        return new JsonResponse(['success' => false, 'content' => '']);
+        if ((!isset($_POST['email'])) || (!isset($_POST['password']))) {
+            return JsonResponse::returnJsonResponse(
+                false,
+                ''
+            );
+        }
+
+        $email      =   $_POST['email'];
+        $password   =   $_POST['password'];
+
+        //if the user exist, we get the UID, else we get bool
+        $getUid = $this->_loginUser->getUserData($email, $password);
+
+
+var_dump($getUid);die();
+
+
     }
 
 }
