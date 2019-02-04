@@ -19,6 +19,9 @@ class Login
      */
     protected $_loginUser;
 
+    /**
+     * @var Request
+     */
     protected $_request;
 
     public function __construct()

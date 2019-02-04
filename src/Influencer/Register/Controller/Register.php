@@ -13,6 +13,7 @@ use App\Helper\JsonResponse;
 use App\Influencer\Register\Model\CreateUser;
 use App\Influencer\Register\Model\InfluencerExist;
 use App\Influencer\Register\Model\UidGenerator;
+use Symfony\Component\HttpFoundation\Request;
 
 class Register
 {
@@ -20,6 +21,11 @@ class Register
      * @var \App\Influencer\Register\Model\CreateUser
      */
     protected $_database;
+
+    /**
+     * @var Request
+     */
+    protected $_request;
 
     /**
      * @var \App\Influencer\Register\Model\InfluencerExist
@@ -30,21 +36,23 @@ class Register
     {
         $this->_database = new CreateUser();
         $this->_userExist = new InfluencerExist();
-
+        $this->_request = new Request();
     }
 
     public function __invoke()
     {
 
-        if ((!isset($_POST['email'])) || (!isset($_POST['password']))) {
+        if(empty($this->_request->getContent())){
             return JsonResponse::returnJsonResponse(
                 false,
-                'Not all fields are set'
+                ''
             );
         }
 
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        $requestJson = json_decode($this->_request->getContent(), true);
+
+        $email = $requestJson['email'];
+        $password = $requestJson['password'];
         $uid = UidGenerator::generateUserId($email);
 
         $checkIfUserExist = $this->_userExist->byEmail($email);
