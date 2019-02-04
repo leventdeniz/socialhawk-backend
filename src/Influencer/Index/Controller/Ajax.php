@@ -10,6 +10,7 @@ namespace App\Influencer\Index\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class Ajax
 {
@@ -18,9 +19,13 @@ class Ajax
      */
     public function __invoke(){
 
-        var_dump($_POST['request']);die();
 
-        //return new JsonResponse(['success' => 'it has worked!']);
+        $test = new Request();
+        $content = $test->getContent();
+
+        //var_dump($content);
+
+        return new JsonResponse(['your_json_string' => $content]);
     }
 
 }
