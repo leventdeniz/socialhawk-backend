@@ -30,7 +30,7 @@ class LoginUser
         }
 
         $sql = $database->prepare("
-            SELECT uid FROM influencer_users WHERE email=? AND password=?
+            SELECT uid FROM influencer_users WHERE email=? AND password=? AND active=1
         ");
 
 
