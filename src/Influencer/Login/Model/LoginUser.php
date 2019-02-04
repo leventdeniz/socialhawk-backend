@@ -16,9 +16,15 @@ class LoginUser
      */
     protected $_databaseConnection;
 
+    /**
+     * @var \App\Influencer\Login\Logger\Monolog
+     */
+    protected $_monolog;
+
     public function __construct()
     {
         $this->_databaseConnection = new \App\Setup\Database();
+        $this->_monolog = new \App\Influencer\Login\Logger\Monolog();
     }
 
     public function getUserData($email, $password){
@@ -48,7 +54,7 @@ class LoginUser
 
         }else if($result->num_rows > 1){
             //something really wrong happend, UID exist more than once
-            //TODO Implement logging for that case @kian
+            $this->_monolog->error('USER ID / EMAIL EXIST MORE THAN ONCE: ' . $email);
 
             return false;
         }

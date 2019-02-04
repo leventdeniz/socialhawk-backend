@@ -9,6 +9,7 @@
 namespace App\Setup;
 
 use mysqli;
+use App\Logger;
 
 class Database
 {
@@ -19,17 +20,28 @@ class Database
         'database' => 'influencer'
     ];
 
+    protected $_monolog;
+
+    public function __construct()
+    {
+        $this->_monolog = new Logger\Monolog();
+    }
+
     public function connectToDatabase(){
 
-        $conn = new mysqli(
-            self::DATABASE_INFO['server'],
-            self::DATABASE_INFO['username'],
-            self::DATABASE_INFO['password'],
-            self::DATABASE_INFO['database']
-        );
+        try {
+            $conn = new mysqli(
+                self::DATABASE_INFO['server'],
+                self::DATABASE_INFO['username'],
+                self::DATABASE_INFO['password'],
+                self::DATABASE_INFO['database']
+            );
 
-        if ($conn->connect_error) {
+        }catch (\Exception $e){
+
+            $this->_monolog->critical('Not database connection possible!', ['exception' => $e]);
             return false;
+
         }
 
         return $conn;
