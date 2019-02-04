@@ -3,11 +3,11 @@
 
 index:
     path: /
-    defaults: { _controller: 'App\Influencer\Index\Controller\Index' }
+    controller: 'App\Influencer\Index\Controller\Index'
 
 xhrTest:
     path: /ajax
-    defaults: { _controller: 'App\Influencer\Index\Controller\Ajax' }
+    controller: 'App\Influencer\Index\Controller\Ajax'
 
 #########################################################################
 # This is the section to the influencer bundle
@@ -15,9 +15,9 @@ xhrTest:
 influencer_login:
     path: /influencer/login
     methods: 'POST'
-    defaults: { _controller: 'App\Influencer\Login\Controller\Login' }
+    controller: 'App\Influencer\Login\Controller\Login'
 
 influencer_register:
     path: /influencer/register
     methods: 'POST'
-    defaults: { _controller: 'App\Influencer\Register\Controller\Register' }
+    controller: 'App\Influencer\Register\Controller\Register'
