@@ -17,7 +17,15 @@ class Ajax
      * @return Response
      */
     public function __invoke(){
-        return new JsonResponse(['success' => 'it has worked!']);
+
+        if (!isset($_POST['request'])){
+            die();
+        }
+
+        $request = $_POST['request'];
+        var_dump($request);die();
+
+        //return new JsonResponse(['success' => 'it has worked!']);
     }
 
 }
