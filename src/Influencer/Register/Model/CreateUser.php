@@ -16,9 +16,12 @@ class CreateUser
      */
     protected $_databaseConnection;
 
+    protected $_monolog;
+
     public function __construct()
     {
         $this->_databaseConnection = new \App\Setup\Database();
+        $this->_monolog = new \App\Influencer\Register\Logger\Monolog();
     }
 
     public function createNewInfluencerUser($email, $password, $uid){
@@ -47,7 +50,7 @@ class CreateUser
         if($insert === true){
             return true;
         }else{
-            //TODO: Insert logging here for us @kian
+            $this->_monolog->critical('Register new Influencer Value could not be inserted to database', ['exception' => __CLASS__]);
             return false;
         }
 
