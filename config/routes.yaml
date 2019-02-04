@@ -19,5 +19,5 @@ influencer_login:
 
 influencer_register:
     path: /influencer/register
-    methods: 'POST'
+    methods: ['POST', 'OPTIONS']
     controller: 'App\Influencer\Register\Controller\Register'
