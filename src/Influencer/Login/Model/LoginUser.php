@@ -9,28 +9,32 @@
 namespace App\Influencer\Login\Model;
 
 
+use App\Influencer\Login\Logger\Monolog;
+use App\Setup\Database;
+
 class LoginUser
 {
     /**
-     * @var \App\Setup\Database
+     * @var Database
      */
     protected $_databaseConnection;
 
     /**
-     * @var \App\Influencer\Login\Logger\Monolog
+     * @var Monolog
      */
     protected $_monolog;
 
     public function __construct()
     {
-        $this->_databaseConnection = new \App\Setup\Database();
-        $this->_monolog = new \App\Influencer\Login\Logger\Monolog();
+        $this->_databaseConnection = new Database();
+        $this->_monolog = new Monolog();
     }
 
-    public function getUserData($email, $password){
+    public function getUserData($email, $password)
+    {
 
         $database = $this->_databaseConnection->connectToDatabase();
-        if($database === false){
+        if ($database === false) {
             //Todo: Insert logging here @kian
             return false;
         }
@@ -48,14 +52,13 @@ class LoginUser
         $result = $sql->get_result();
 
         //user does exist
-        if($result->num_rows === 1){
+        if ($result->num_rows === 1) {
 
             return $result->fetch_all();
 
-        }else if($result->num_rows > 1){
-            //something really wrong happend, UID exist more than once
+        } else if ($result->num_rows > 1) {
+            //something really wrong happened, UID exist more than once
             $this->_monolog->error('USER ID / EMAIL EXIST MORE THAN ONCE: ' . $email);
-
             return false;
         }
 

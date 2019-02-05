@@ -10,12 +10,13 @@ namespace App\Influencer\Login\Controller;
 
 
 use App\Helper\JsonResponse;
+use App\Influencer\Login\Model\LoginUser;
 use Symfony\Component\HttpFoundation\Request;
 
 class Login
 {
     /**
-     * @var \App\Influencer\Login\Model\LoginUser
+     * @var LoginUser
      */
     protected $_loginUser;
 
@@ -26,15 +27,15 @@ class Login
 
     public function __construct()
     {
-        $this->_loginUser = new \App\Influencer\Login\Model\LoginUser();
+        $this->_loginUser = new LoginUser();
         $this->_request = new Request();
     }
 
 
-    public function __invoke(){
-
-
-        if(empty($this->_request->getContent())){
+    public function __invoke()
+    {
+        
+        if (empty($this->_request->getContent())) {
             return JsonResponse::return(false);
         }
 
@@ -45,7 +46,7 @@ class Login
 
         //if the user exist, we get the UID, else we get bool
         $getUid = $this->_loginUser->getUserData($email, $password);
-        if($getUid === false){
+        if ($getUid === false) {
             return JsonResponse::return(
                 false,
                 'Username or password wrong'
@@ -56,7 +57,6 @@ class Login
             true,
             $getUid[0][0]
         );
-
 
     }
 
