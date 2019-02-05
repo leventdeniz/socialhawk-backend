@@ -14,6 +14,7 @@ use Monolog\Logger;
 
 class Monolog extends Logger
 {
+
     public function __construct()
     {
         parent::__construct('database_logger', [], []);

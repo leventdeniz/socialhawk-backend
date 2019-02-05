@@ -25,5 +25,4 @@ class Monolog extends Logger
         return parent::pushHandler(new StreamHandler('../var/log/login.log', Logger::DEBUG));
     }
 
-
 }
