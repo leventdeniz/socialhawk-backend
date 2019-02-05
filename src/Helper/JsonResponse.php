@@ -16,7 +16,7 @@ class JsonResponse
      * @param mixed $content
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public static function returnJsonResponse($success, $content)
+    public static function returnJsonResponse($success, $content = '')
     {
         return \Symfony\Component\HttpFoundation\JsonResponse::create([
             'success' => (bool)$success,
