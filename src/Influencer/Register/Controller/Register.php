@@ -42,6 +42,7 @@ class Register
     public function __invoke()
     {
 
+        //If request body is empty
         if(empty($this->_request->getContent())){
             return JsonResponse::returnJsonResponse(
                 false,
@@ -50,6 +51,14 @@ class Register
         }
 
         $requestJson = json_decode($this->_request->getContent(), true);
+
+        //If body fields are empty
+        if(empty($requestJson['email']) || empty($requestJson['password'])){
+            return JsonResponse::returnJsonResponse(
+                false,
+                'Your password or email is empty'
+            );
+        }
 
         $email = $requestJson['email'];
         $password = $requestJson['password'];
