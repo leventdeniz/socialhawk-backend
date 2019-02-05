@@ -26,4 +26,4 @@ influencer_register:
 influencer_validate_uid:
     path: /influencer/validate/uid
     methods: 'POST'
-    controller: 'App\Influencer\UserIdValidation\Controller\UserIdValidation'
+    controller: 'App\Influencer\UserIdValidation\Controller\UserIdValidate'
