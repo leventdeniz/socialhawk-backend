@@ -59,7 +59,9 @@ class UserIdValidation
         $a = $userId;
 
         $sql->execute();
-        $result = $sql->get_result();
+        $sqlResult = $sql->get_result();
+        $sqlFetch = $sqlResult->fetch_all();
+        $result = $sqlFetch[0][0];
 
         if ($result === 0) {
             return false;
