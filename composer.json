@@ -10,7 +10,8 @@
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "3.4.*",
         "symfony/monolog-bundle": "^3.3",
-        "symfony/yaml": "3.4.*"
+        "symfony/yaml": "3.4.*",
+      "ext-json": "*"
     },
     "config": {
         "preferred-install": {
