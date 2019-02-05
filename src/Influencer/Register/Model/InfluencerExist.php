@@ -56,4 +56,34 @@ class InfluencerExist
 
     }
 
+    public function byCredentials($email, $username){
+
+        $database = $this->_databaseConnection->connectToDatabase();
+        if($database === false){
+            return false;
+        }
+
+        $sql = $database->prepare("
+            SELECT * FROM influencer_users WHERE email=? OR username=?
+        ");
+
+
+        $sql->bind_param("ss", $a, $b);
+        $a = $email;
+        $b = $username;
+
+        $sql->execute();
+        $result = $sql->get_result();
+
+        /**
+         * User does not exist, so we return false
+         * Else we return true, the user does exist.
+         */
+        if($result->num_rows === 0){
+            return false;
+        }
+
+        return true;
+    }
+
 }

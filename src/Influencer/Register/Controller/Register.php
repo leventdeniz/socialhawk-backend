@@ -50,18 +50,27 @@ class Register
         $requestJson = json_decode($this->_request->getContent(), true);
 
         //If body fields are empty
-        if(empty($requestJson['email']) || empty($requestJson['password'])){
+        if(empty($requestJson['email']) || empty($requestJson['password']) || empty($requestJson['username']) || empty($requestJson['repassword'])){
             return JsonResponse::return(
                 false,
-                'Your password or email is empty'
+                'Your password, email or username is empty'
             );
         }
 
-        $email = $requestJson['email'];
-        $password = $requestJson['password'];
-        $uid = UidGenerator::generateUserId($email);
+        //check if passwords are matching
+        if($requestJson['password'] !== $requestJson['repassword']){
+            return JsonResponse::returnJsonResponse(
+                false,
+                'Passwords are not matching'
+            );
+        }
 
-        $checkIfUserExist = $this->_userExist->byEmail($email);
+        $email      = $requestJson['email'];
+        $password   = $requestJson['password'];
+        $username   = $requestJson['username'];
+        $uid        = UidGenerator::generateUserId($email);
+
+        $checkIfUserExist = $this->_userExist->byCredentials($email, $username);
 
         /**
          * The user does exist, we the user can't sign up
@@ -69,11 +78,11 @@ class Register
         if ($checkIfUserExist === true) {
             return JsonResponse::return(
                 false,
-                'E-Mail exist'
+                'E-Mail or Username aldready exist. Please choose a new one.'
             );
         }
 
-        $registerUser = $this->_database->createNewInfluencerUser($email, $password, $uid);
+        $registerUser = $this->_database->createNewInfluencerUser($email, $password, $uid, $username);
 
         if ($registerUser === false) {
             return JsonResponse::return(false);

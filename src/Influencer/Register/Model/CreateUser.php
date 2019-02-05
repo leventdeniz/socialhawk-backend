@@ -24,26 +24,26 @@ class CreateUser
         $this->_monolog = new \App\Influencer\Register\Logger\Monolog();
     }
 
-    public function createNewInfluencerUser($email, $password, $uid){
+    public function createNewInfluencerUser($email, $password, $uid, $username){
 
         $database = $this->_databaseConnection->connectToDatabase();
         if($database === false){
-            //Todo: Insert logging here @kian
             return false;
         }
 
         $sql = $database->prepare("
-            INSERT INTO influencer_users(email, password, uid, active)
-            Values(?, ?, ?, ?)
+            INSERT INTO influencer_users(email, password, uid, active, username)
+            Values(?, ?, ?, ?, ?)
         ");
 
 
-        $sql->bind_param("sssi", $a, $b, $c, $d);
+        $sql->bind_param("sssis", $a, $b, $c, $d, $e);
 
         $a = $email;
         $b = $password;
         $c = $uid;
         $d = 1;
+        $e = $username;
 
 
         $insert = $sql->execute();
