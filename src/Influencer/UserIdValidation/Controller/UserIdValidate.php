@@ -47,20 +47,20 @@ class UserIdValidate
     public function __invoke()
     {
         if (empty($this->_request->getContent())) {
-            return JsonResponse::returnJsonResponse(false);
+            return JsonResponse::return(false);
         }
 
         $requestJson    = json_decode($this->_request->getContent(), true);
         $uid            = $requestJson['uid'];
         if (empty($uid)) {
-            return JsonResponse::returnJsonResponse(false);
+            return JsonResponse::return(false);
         }
 
         $validUserId = $this->_validator->validateUniqueUserId($uid);
         if ($validUserId) {
-            return JsonResponse::returnJsonResponse(true);
+            return JsonResponse::return(true);
         } else {
-            return JsonResponse::returnJsonResponse(false);
+            return JsonResponse::return(false);
         }
     }
 }

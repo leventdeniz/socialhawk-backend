@@ -35,10 +35,7 @@ class Login
 
 
         if(empty($this->_request->getContent())){
-            return JsonResponse::returnJsonResponse(
-                false,
-                ''
-            );
+            return JsonResponse::return(false);
         }
 
         $requestJson = json_decode($this->_request->getContent(), true);
@@ -49,13 +46,13 @@ class Login
         //if the user exist, we get the UID, else we get bool
         $getUid = $this->_loginUser->getUserData($email, $password);
         if($getUid === false){
-            return JsonResponse::returnJsonResponse(
+            return JsonResponse::return(
                 false,
                 'Username or password wrong'
             );
         }
 
-        return JsonResponse::returnJsonResponse(
+        return JsonResponse::return(
             true,
             $getUid[0][0]
         );

@@ -44,17 +44,14 @@ class Register
 
         //If request body is empty
         if(empty($this->_request->getContent())){
-            return JsonResponse::returnJsonResponse(
-                false,
-                ''
-            );
+            return JsonResponse::return(false);
         }
 
         $requestJson = json_decode($this->_request->getContent(), true);
 
         //If body fields are empty
         if(empty($requestJson['email']) || empty($requestJson['password'])){
-            return JsonResponse::returnJsonResponse(
+            return JsonResponse::return(
                 false,
                 'Your password or email is empty'
             );
@@ -70,7 +67,7 @@ class Register
          * The user does exist, we the user can't sign up
          */
         if ($checkIfUserExist === true) {
-            return JsonResponse::returnJsonResponse(
+            return JsonResponse::return(
                 false,
                 'E-Mail exist'
             );
@@ -79,13 +76,10 @@ class Register
         $registerUser = $this->_database->createNewInfluencerUser($email, $password, $uid);
 
         if ($registerUser === false) {
-            return JsonResponse::returnJsonResponse(
-                false,
-                ''
-            );
+            return JsonResponse::return(false);
         }
 
-        return JsonResponse::returnJsonResponse(
+        return JsonResponse::return(
             true,
             ['uid' => $uid]
         );
