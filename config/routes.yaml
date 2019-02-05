@@ -7,7 +7,7 @@ index:
 
 xhrTest:
     path: /ajax
-    methods: ['POST', 'OPTIONS', 'GET']
+    methods: 'POST'
     controller: 'App\Influencer\Index\Controller\Ajax'
 
 #########################################################################
@@ -20,5 +20,10 @@ influencer_login:
 
 influencer_register:
     path: /influencer/register
-    methods: ['POST', 'OPTIONS']
+    methods: 'POST'
     controller: 'App\Influencer\Register\Controller\Register'
+
+influencer_validate_uid:
+    path: /influencer/validate/uid
+    methods: 'POST'
+    controller: 'App\Influencer\UserIdValidation\Controller\UserIdValidation'
