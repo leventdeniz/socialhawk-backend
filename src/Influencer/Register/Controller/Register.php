@@ -82,7 +82,7 @@ class Register
         if ($checkIfUserExist === true) {
             return JsonResponse::return(
                 false,
-                'E-Mail or Username aldready exist. Please choose a new one.'
+                'E-Mail or Username already exist. Please choose a new one.'
             );
         }
 
