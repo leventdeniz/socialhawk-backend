@@ -52,8 +52,8 @@ class Register
         //If body fields are empty
         if (empty($requestJson['email'])
             || empty($requestJson['password'])
+            || empty($requestJson['passwordConfirm'])
             || empty($requestJson['username'])
-            || empty($requestJson['repassword'])
         ) {
             return JsonResponse::return(
                 false,
@@ -62,7 +62,7 @@ class Register
         }
 
         //check if passwords are matching
-        if ($requestJson['password'] !== $requestJson['repassword']) {
+        if ($requestJson['password'] !== $requestJson['passwordConfirm']) {
             return JsonResponse::return(
                 false,
                 'Passwords are not matching'
