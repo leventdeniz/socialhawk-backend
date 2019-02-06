@@ -39,7 +39,7 @@ class Mailer
             echo "email has been sent";
 
         }catch (\Exception $e){
-            var_dump($e);
+            var_dump($e->getMessage());
         }
 
     }
