@@ -9,7 +9,7 @@
 namespace App\Influencer\UserIdValidation\Model;
 
 
-use App\Influencer\UserIdValidation\Logger\Monolog;
+use App\Influencer\UserIdValidation\Logger\UserIdValidationLogger;
 use App\Setup\Database;
 
 class UserIdValidation
@@ -20,7 +20,7 @@ class UserIdValidation
     protected $_database;
 
     /**
-     * @var Monolog
+     * @var UserIdValidationLogger
      */
     protected $_monolog;
 
@@ -30,7 +30,7 @@ class UserIdValidation
     public function __construct()
     {
         $this->_database = new Database();
-        $this->_monolog = new Monolog();
+        $this->_monolog = new UserIdValidationLogger();
     }
 
     /**

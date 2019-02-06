@@ -12,7 +12,7 @@ use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
-class Monolog extends Logger
+class UserIdValidationLogger extends Logger
 {
 
     public function __construct()

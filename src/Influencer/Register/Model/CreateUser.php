@@ -16,12 +16,15 @@ class CreateUser
      */
     protected $_databaseConnection;
 
+    /**
+     * @var \App\Influencer\Register\Logger\RegisterLogger
+     */
     protected $_monolog;
 
     public function __construct()
     {
         $this->_databaseConnection = new \App\Setup\Database();
-        $this->_monolog = new \App\Influencer\Register\Logger\Monolog();
+        $this->_monolog = new \App\Influencer\Register\Logger\RegisterLogger();
     }
 
     public function createNewInfluencerUser($email, $password, $uid, $username){

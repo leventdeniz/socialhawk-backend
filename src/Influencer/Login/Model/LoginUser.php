@@ -9,7 +9,7 @@
 namespace App\Influencer\Login\Model;
 
 
-use App\Influencer\Login\Logger\Monolog;
+use App\Influencer\Login\Logger\LoginLogger;
 use App\Setup\Database;
 
 class LoginUser
@@ -20,14 +20,14 @@ class LoginUser
     protected $_databaseConnection;
 
     /**
-     * @var Monolog
+     * @var LoginLogger
      */
     protected $_monolog;
 
     public function __construct()
     {
         $this->_databaseConnection = new Database();
-        $this->_monolog = new Monolog();
+        $this->_monolog = new LoginLogger();
     }
 
     public function getUserData($email, $password)
