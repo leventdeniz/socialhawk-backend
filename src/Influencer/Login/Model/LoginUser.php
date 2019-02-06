@@ -30,6 +30,11 @@ class LoginUser
         $this->_monolog = new LoginLogger();
     }
 
+    /**
+     * @param $email
+     * @param $password
+     * @return bool|mixed
+     */
     public function getUserData($email, $password)
     {
 

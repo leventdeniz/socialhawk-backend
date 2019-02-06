@@ -31,7 +31,6 @@ class Login
         $this->_request = new Request();
     }
 
-
     public function __invoke()
     {
         
