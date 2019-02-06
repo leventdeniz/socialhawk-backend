@@ -2,6 +2,9 @@
     "monolog/monolog": {
         "version": "1.24.0"
     },
+    "phpmailer/phpmailer": {
+        "version": "v6.0.7"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
