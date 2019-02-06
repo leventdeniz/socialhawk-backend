@@ -11,6 +11,8 @@ namespace App\Influencer\Register\Model;
 
 use App\Influencer\Register\Logger\RegisterLogger;
 use App\Setup\Database;
+use DateTime;
+use Exception;
 
 class CreateUser
 {
@@ -41,22 +43,24 @@ class CreateUser
     {
 
         $database = $this->_databaseConnection->connectToDatabase();
-        if ($database === false) {
+        $date = $this->getDate();
+        if ($database === false || $date === false) {
             return false;
         }
 
         $sql = $database->prepare("
-            INSERT INTO influencer_users(email, password, uid, active, username)
-            Values(?, ?, ?, ?, ?)
+            INSERT INTO influencer_users(email, password, uid, reg_date, active, username)
+            Values(?, ?, ?, FROM_UNIXTIME(?), ?, ?)
         ");
 
-        $sql->bind_param("sssis", $a, $b, $c, $d, $e);
+        $sql->bind_param("sssiis", $a, $b, $c, $d, $e, $f);
 
         $a = $email;
         $b = $password;
         $c = $uid;
-        $d = 1;
-        $e = $username;
+        $d = $date;
+        $e = 1;
+        $f = $username;
 
         $insert = $sql->execute();
         if ($insert === true) {
@@ -69,6 +73,24 @@ class CreateUser
             return false;
         }
 
+    }
+
+    /**
+     * get unix int of current timestamp
+     * @return bool|int
+     */
+    private function getDate()
+    {
+        try {
+            $dateNow = new DateTime();
+            return $dateNow->getTimestamp();
+        } catch (Exception $e) {
+            $this->_monolog->critical(
+                $e->getMessage(),
+                ['exception' => __CLASS__]
+            );
+            return false;
+        }
     }
 
 }
