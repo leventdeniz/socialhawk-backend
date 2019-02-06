@@ -13,6 +13,10 @@ class UidGenerator
 {
 
     //TODO: This needs to be overhauled @kian
+    /**
+     * @param $email
+     * @return string
+     */
     public static function generateUserId($email){
         return sha1($email) . rand(0, 999999);
     }

@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class Register
 {
     /**
-     * @var \App\Influencer\Register\Model\CreateUser
+     * @var CreateUser
      */
     protected $_database;
 
@@ -28,7 +28,7 @@ class Register
     protected $_request;
 
     /**
-     * @var \App\Influencer\Register\Model\InfluencerExist
+     * @var InfluencerExist
      */
     protected $_userExist;
 
@@ -43,14 +43,18 @@ class Register
     {
 
         //If request body is empty
-        if(empty($this->_request->getContent())){
+        if (empty($this->_request->getContent())) {
             return JsonResponse::return(false);
         }
 
         $requestJson = json_decode($this->_request->getContent(), true);
 
         //If body fields are empty
-        if(empty($requestJson['email']) || empty($requestJson['password']) || empty($requestJson['username']) || empty($requestJson['repassword'])){
+        if (empty($requestJson['email'])
+            || empty($requestJson['password'])
+            || empty($requestJson['username'])
+            || empty($requestJson['repassword'])
+        ) {
             return JsonResponse::return(
                 false,
                 'Your password, email or username is empty'
@@ -58,8 +62,8 @@ class Register
         }
 
         //check if passwords are matching
-        if($requestJson['password'] !== $requestJson['repassword']){
-            return JsonResponse::returnJsonResponse(
+        if ($requestJson['password'] !== $requestJson['repassword']) {
+            return JsonResponse::return(
                 false,
                 'Passwords are not matching'
             );

@@ -9,28 +9,39 @@
 namespace App\Influencer\Register\Model;
 
 
+use App\Influencer\Register\Logger\RegisterLogger;
+use App\Setup\Database;
+
 class CreateUser
 {
     /**
-     * @var \App\Setup\Database
+     * @var Database
      */
     protected $_databaseConnection;
 
     /**
-     * @var \App\Influencer\Register\Logger\RegisterLogger
+     * @var RegisterLogger
      */
     protected $_monolog;
 
     public function __construct()
     {
-        $this->_databaseConnection = new \App\Setup\Database();
-        $this->_monolog = new \App\Influencer\Register\Logger\RegisterLogger();
+        $this->_databaseConnection = new Database();
+        $this->_monolog = new RegisterLogger();
     }
 
-    public function createNewInfluencerUser($email, $password, $uid, $username){
+    /**
+     * @param $email
+     * @param $password
+     * @param $uid
+     * @param $username
+     * @return bool
+     */
+    public function createNewInfluencerUser($email, $password, $uid, $username)
+    {
 
         $database = $this->_databaseConnection->connectToDatabase();
-        if($database === false){
+        if ($database === false) {
             return false;
         }
 
@@ -38,7 +49,6 @@ class CreateUser
             INSERT INTO influencer_users(email, password, uid, active, username)
             Values(?, ?, ?, ?, ?)
         ");
-
 
         $sql->bind_param("sssis", $a, $b, $c, $d, $e);
 
@@ -48,19 +58,17 @@ class CreateUser
         $d = 1;
         $e = $username;
 
-
         $insert = $sql->execute();
-        if($insert === true){
+        if ($insert === true) {
             return true;
-        }else{
-            $this->_monolog->critical('Register new Influencer Value could not be inserted to database', ['exception' => __CLASS__]);
+        } else {
+            $this->_monolog->critical(
+                'Register new Influencer Value could not be inserted to database',
+                ['exception' => __CLASS__]
+            );
             return false;
         }
 
-
-
     }
-
-
 
 }

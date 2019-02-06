@@ -9,26 +9,32 @@
 namespace App\Influencer\Register\Model;
 
 
+use App\Setup\Database;
+
 class InfluencerExist
 {
     /**
-     * @var \App\Setup\Database
+     * @var Database
      */
     protected $_databaseConnection;
 
+    /**
+     * InfluencerExist constructor.
+     */
     public function __construct()
     {
-        $this->_databaseConnection = new \App\Setup\Database();
+        $this->_databaseConnection = new Database();
     }
 
     /**
      * @param $email
      * @return bool
      */
-    public function byEmail($email){
+    public function byEmail($email)
+    {
 
         $database = $this->_databaseConnection->connectToDatabase();
-        if($database === false){
+        if ($database === false) {
             return false;
         }
 
@@ -47,7 +53,7 @@ class InfluencerExist
          * User does not exist, so we return false
          * Else we return true, the user does exist.
          */
-        if($result->num_rows === 0){
+        if ($result->num_rows === 0) {
             return false;
         }
 
@@ -56,10 +62,16 @@ class InfluencerExist
 
     }
 
-    public function byCredentials($email, $username){
+    /**
+     * @param $email
+     * @param $username
+     * @return bool
+     */
+    public function byCredentials($email, $username)
+    {
 
         $database = $this->_databaseConnection->connectToDatabase();
-        if($database === false){
+        if ($database === false) {
             return false;
         }
 
@@ -79,7 +91,7 @@ class InfluencerExist
          * User does not exist, so we return false
          * Else we return true, the user does exist.
          */
-        if($result->num_rows === 0){
+        if ($result->num_rows === 0) {
             return false;
         }
 
