@@ -6,7 +6,7 @@
  * Time: 21:18
  */
 
-namespace App\Influencer\Index\Controller;
+namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;

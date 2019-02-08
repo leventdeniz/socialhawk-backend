@@ -3,12 +3,12 @@
 
 index:
     path: /
-    controller: 'App\Influencer\Index\Controller\Index'
+    controller: 'App\Controller\Index'
 
 xhrTest:
     path: /ajax
     methods: 'POST'
-    controller: 'App\Influencer\Index\Controller\Ajax'
+    controller: 'App\Controller\Ajax'
 
 #########################################################################
 # This is the section to the influencer bundle
