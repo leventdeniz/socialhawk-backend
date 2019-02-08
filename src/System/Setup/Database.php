@@ -6,10 +6,10 @@
  * Time: 21:33
  */
 
-namespace App\Setup;
+namespace App\System\Setup;
 
 use mysqli;
-use App\Logger;
+use App\System\Logger;
 
 class Database
 {

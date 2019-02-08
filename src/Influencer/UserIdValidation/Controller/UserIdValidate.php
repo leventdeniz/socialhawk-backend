@@ -9,9 +9,9 @@
 namespace App\Influencer\UserIdValidation\Controller;
 
 
-use App\Helper\JsonResponse;
+use App\System\Helper\JsonResponse;
 use App\Influencer\UserIdValidation\Model\UserIdValidation as UserIdValidationModel;
-use App\Setup\Database;
+use App\System\Setup\Database;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserIdValidate

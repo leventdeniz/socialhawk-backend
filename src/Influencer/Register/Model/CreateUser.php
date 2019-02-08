@@ -10,7 +10,7 @@ namespace App\Influencer\Register\Model;
 
 
 use App\Influencer\Register\Logger\RegisterLogger;
-use App\Setup\Database;
+use App\System\Setup\Database;
 use DateTime;
 use Exception;
 

@@ -10,7 +10,7 @@ namespace App\Influencer\Login\Model;
 
 
 use App\Influencer\Login\Logger\LoginLogger;
-use App\Setup\Database;
+use App\System\Setup\Database;
 
 class LoginUser
 {

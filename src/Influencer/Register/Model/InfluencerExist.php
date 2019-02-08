@@ -9,7 +9,7 @@
 namespace App\Influencer\Register\Model;
 
 
-use App\Setup\Database;
+use App\System\Setup\Database;
 
 class InfluencerExist
 {

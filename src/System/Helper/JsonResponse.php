@@ -6,7 +6,7 @@
  * Time: 14:54
  */
 
-namespace App\Helper;
+namespace App\System\Helper;
 
 
 class JsonResponse
