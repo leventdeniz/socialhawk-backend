@@ -27,3 +27,12 @@ influencer_validate_uid:
     path: /influencer/validate/uid
     methods: 'POST'
     controller: 'App\Influencer\UserIdValidation\Controller\UserIdValidate'
+
+
+#########################################################################
+# This is the section to the influencer bundle
+
+advertiser_login:
+    path: /advertiser/login
+    methods: 'POST'
+    controller: 'App\Advertiser\Login\Controller\Login'
