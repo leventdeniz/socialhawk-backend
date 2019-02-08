@@ -36,3 +36,8 @@ advertiser_login:
     path: /advertiser/login
     methods: 'POST'
     controller: 'App\Advertiser\Login\Controller\Login'
+
+advertiser_register:
+    path: /advertiser/register
+    methods: 'POST'
+    controller: 'App\Advertiser\Register\Controller\Register'
