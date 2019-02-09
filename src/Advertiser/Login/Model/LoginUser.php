@@ -45,7 +45,7 @@ class LoginUser
         }
 
         $sql = $database->prepare("
-            SELECT uid FROM advertiser_users WHERE email_address=? AND password=? AND active=1
+            SELECT uid FROM advertiser_users WHERE email=? AND password=? AND active=1
         ");
 
 
