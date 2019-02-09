@@ -28,6 +28,10 @@ influencer_validate_uid:
     methods: 'POST'
     controller: 'App\Influencer\UserIdValidation\Controller\UserIdValidate'
 
+influencer_dashboard:
+    path: /influencer/dashboard
+    methods: 'POST'
+    controller: 'App\Influencer\Dashboard\Controller\Dashboard'
 
 #########################################################################
 # This is the section to the influencer bundle
