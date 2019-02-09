@@ -6,10 +6,10 @@
  * Time: 21:33
  */
 
-namespace App\System\Setup;
+namespace App\System\Core\Setup;
 
 use mysqli;
-use App\System\Logger;
+use App\System\Core\Logger;
 
 class Database
 {
@@ -20,6 +20,9 @@ class Database
         'database' => 'influencer'
     ];
 
+    /**
+     * @var Logger\Monolog
+     */
     protected $_monolog;
 
     public function __construct()
@@ -27,6 +30,9 @@ class Database
         $this->_monolog = new Logger\Monolog();
     }
 
+    /**
+     * @return bool|mysqli
+     */
     public function connectToDatabase(){
 
         try {

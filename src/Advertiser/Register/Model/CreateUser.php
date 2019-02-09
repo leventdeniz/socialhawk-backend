@@ -10,7 +10,7 @@ namespace App\Advertiser\Register\Model;
 
 
 use App\Advertiser\Register\Logger\RegisterLogger;
-use App\System\Setup\Database;
+use App\System\Core\Setup\Database;
 use DateTime;
 use Exception;
 

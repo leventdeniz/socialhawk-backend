@@ -10,7 +10,7 @@ namespace App\Influencer\UserIdValidation\Model;
 
 
 use App\Influencer\UserIdValidation\Logger\UserIdValidationLogger;
-use App\System\Setup\Database;
+use App\System\Core\Setup\Database;
 
 class UserIdValidation
 {

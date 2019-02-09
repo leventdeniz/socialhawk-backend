@@ -10,7 +10,7 @@ namespace App\Advertiser\Login\Model;
 
 
 use App\Advertiser\Login\Logger\LoginLogger;
-use App\System\Setup\Database;
+use App\System\Core\Setup\Database;
 
 class LoginUser
 {

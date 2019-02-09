@@ -9,7 +9,7 @@
 namespace App\Advertiser\Login\Controller;
 
 
-use App\System\Helper\JsonResponse;
+use App\System\Core\Helper\JsonResponse;
 use App\Advertiser\Login\Model\LoginUser;
 use Symfony\Component\HttpFoundation\Request;
 

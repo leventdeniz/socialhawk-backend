@@ -9,7 +9,7 @@
 namespace App\Influencer\Login\Controller;
 
 
-use App\System\Helper\JsonResponse;
+use App\System\Core\Helper\JsonResponse;
 use App\Influencer\Login\Model\LoginUser;
 use Symfony\Component\HttpFoundation\Request;
 

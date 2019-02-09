@@ -9,7 +9,7 @@
 namespace App\Advertiser\Register\Controller;
 
 
-use App\System\Helper\JsonResponse;
+use App\System\Core\Helper\JsonResponse;
 use App\Advertiser\Register\Model\CreateUser;
 use App\Advertiser\Register\Model\InfluencerExist;
 use App\Advertiser\Register\Model\UidGenerator;

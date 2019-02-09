@@ -9,7 +9,7 @@
 namespace App\Influencer\Register\Controller;
 
 
-use App\System\Helper\JsonResponse;
+use App\System\Core\Helper\JsonResponse;
 use App\Influencer\Register\Model\CreateUser;
 use App\Influencer\Register\Model\InfluencerExist;
 use App\Influencer\Register\Model\UidGenerator;
