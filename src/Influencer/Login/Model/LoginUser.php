@@ -40,7 +40,6 @@ class LoginUser
 
         $database = $this->_databaseConnection->connectToDatabase();
         if ($database === false) {
-            //Todo: Insert logging here @kian
             return false;
         }
 
