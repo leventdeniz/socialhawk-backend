@@ -11,6 +11,7 @@ namespace App\Influencer\Dashboard\Controller;
 use App\System\Core\Helper\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Influencer\UserIdValidation\Model\UserIdValidation;
+use App\Influencer\Dashboard\Model\Profile;
 
 class Dashboard
 {
@@ -24,10 +25,16 @@ class Dashboard
      */
     protected $_uidValidation;
 
+    /**
+     * @var Profile
+     */
+    protected $_profile;
+
     public function __construct()
     {
         $this->_request         = new Request();
         $this->_uidValidation   = new UserIdValidation();
+        $this->_profile         = new Profile();
     }
 
     /**
@@ -46,7 +53,25 @@ class Dashboard
 
         $validate = $this->_uidValidation->validateUniqueUserId($uid);
         if($validate){
-            return JsonResponse::return(true);
+
+            $getProfileData = $this->_profile->getProfileData($uid);
+
+            /**
+             * Something really wrong happend, either the database is down or the user does not exist anymore
+             */
+            if($getProfileData === false){
+                return JsonResponse::return(false);
+            }
+
+            $profileJson = [
+                'name' => $getProfileData[0][0],
+                'email' => $getProfileData[0][1],
+                'reg_date' => $getProfileData[0][2]
+            ];
+
+            $returnData = ['profile' => $profileJson];
+
+            return JsonResponse::return(true, $returnData);
         }
 
         return JsonResponse::return(false);
