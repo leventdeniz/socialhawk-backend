@@ -11,6 +11,7 @@ namespace App\Influencer\Campaign\Controller;
 use App\System\Core\Helper\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Influencer\UserIdValidation\Model\UserIdValidation;
+use App\Influencer\Campaign\Model\UserRecommendation;
 
 class Recommendation
 {
@@ -24,10 +25,16 @@ class Recommendation
      */
     protected $_request;
 
+    /**
+     * @var UserRecommendation
+     */
+    protected $_userRecommendation;
+
     public function __construct()
     {
-        $this->_request         = new Request();
-        $this->_uidValidation   = new UserIdValidation();
+        $this->_request             = new Request();
+        $this->_uidValidation       = new UserIdValidation();
+        $this->_userRecommendation  = new UserRecommendation();
     }
 
     /**
@@ -44,6 +51,10 @@ class Recommendation
 
         $validate = $this->_uidValidation->validateUniqueUserId($uid);
         if($validate){
+
+
+            $recommendation = $this->_userRecommendation->getUserRecommendation($uid);
+            print_r($recommendation);die();
 
             $recommmendation = [
 
