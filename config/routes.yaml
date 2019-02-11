@@ -38,6 +38,11 @@ influencer_campaign_recommendation:
     methods: 'POST'
     controller: 'App\Influencer\Campaign\Controller\Recommendation'
 
+influencer_import_instagram:
+    path: /influencer/import/instagram
+    methods: 'POST'
+    controller: 'App\Influencer\SocialMediaImport\Controller\Instagram'
+
 #########################################################################
 # This is the section to the influencer bundle
 
