@@ -33,6 +33,11 @@ influencer_dashboard:
     methods: 'POST'
     controller: 'App\Influencer\Dashboard\Controller\Dashboard'
 
+influencer_campaign_recommendation:
+    path: /influencer/campaign/recommendation
+    methods: 'POST'
+    controller: 'App\Influencer\Campaign\Controller\Recommendation'
+
 #########################################################################
 # This is the section to the influencer bundle
 
