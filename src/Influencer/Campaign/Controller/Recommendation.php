@@ -53,9 +53,9 @@ class Recommendation
         if($validate){
 
 
-            //$recommendation = $this->_userRecommendation->getUserRecommendation($uid);
+            $recommendation = $this->_userRecommendation->getUserRecommendation($uid);
             //print_r($recommendation);die();
-
+/*
             $recommmendation = [
 
                 [
@@ -96,8 +96,8 @@ class Recommendation
                 ]
 
             ];
-
-            return JsonResponse::return(true, $recommmendation);
+*/
+            return JsonResponse::return(true, $recommendation);
         }
 
         return JsonResponse::return(false);

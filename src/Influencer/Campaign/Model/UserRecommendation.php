@@ -22,7 +22,8 @@ class UserRecommendation
         $this->_databaseConnection = new Database();
     }
 
-    public function getUserRecommendation($uid){
+    public function getUserRecommendation($uid)
+    {
 
         $database = $this->_databaseConnection->connectToDatabase();
         if ($database === false) {
@@ -30,10 +31,28 @@ class UserRecommendation
         }
 
         $sql = $database->prepare("
-            SELECT campaigns.id, campaigns.campaign_id, campaigns.campaign_title, campaigns.campaign_desc,  campaigns_reward.id_rewards FROM campaigns 
-            LEFT JOIN campaigns ON campaigns_reward.id_rewards = campaigns.id  
-            
-            WHERE campaigns.active=1
+            SELECT c.campaign_hash      AS campaign_id,
+                   a.company_name       AS advertiser,
+                   c.campaign_title     AS title,
+                   c.campaign_desc      AS description,
+                   c.creation_date,
+                   c.expiration_date,
+                   GROUP_CONCAT(h.tag)  AS hashtags,
+                   'https://via.placeholder.com/650x350' as thumbnail,
+                   r.type               AS rewards
+            FROM campaigns AS c
+                   LEFT JOIN campaigns_rewards AS c_r
+                             ON c.id = c_r.id_campaign
+                   LEFT JOIN rewards AS r
+                             ON r.id = c_r.id_rewards
+                   LEFT JOIN advertiser_users AS a
+                             ON a.id = c.advertiser_id
+                   LEFT JOIN campaigns_hashtags AS c_h
+                             ON c_h.campagin_id = c.id
+                   LEFT JOIN hashtags AS h
+                             ON h.id = c_h.hashtag_id
+            WHERE c.active = 1
+            GROUP BY c.id
         ");
 
 
