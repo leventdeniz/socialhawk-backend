@@ -66,7 +66,8 @@ class Recommendation
                     'campaign_creation_date' => 'xx.xx.xx',
                     'campaign_expiration_date' => 'yy.yy.xx',
                     'campaign_hashtags' => ['beauty', 'new', 'freshsmell', 'stuff'],
-                    'campaign_thumbnail' => ''
+                    'campaign_thumbnail' => 'https://via.placeholder.com/650x350',
+                    'reward' => '100€'
                 ],
 
 
@@ -78,7 +79,8 @@ class Recommendation
                     'campaign_creation_date' => 'xx.xx.xx',
                     'campaign_expiration_date' => 'yy.yy.xx',
                     'campaign_hashtags' => ['shoe', 'sport', 'trendy', 'unisex'],
-                    'campaign_thumbnail' => ''
+                    'campaign_thumbnail' => 'https://via.placeholder.com/650x350',
+                    'reward' => '100€'
                 ],
 
                 [
@@ -89,7 +91,8 @@ class Recommendation
                     'campaign_creation_date' => 'xx.xx.xx',
                     'campaign_expiration_date' => 'yy.yy.xx',
                     'campaign_hashtags' => ['3er', 'Neu', 'AMK', 'BMW'],
-                    'campaign_thumbnail' => ''
+                    'campaign_thumbnail' => 'https://via.placeholder.com/650x350',
+                    'reward' => '100€'
                 ]
 
             ];
