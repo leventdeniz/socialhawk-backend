@@ -59,10 +59,12 @@ class Recommendation
             $recommmendation = [
 
                 [
+                    'campaign_id' => '1337',
                     'company' => 'Edeka',
-                    'title' => 'Euterpflege',
-                    'desc' => 'lorem ipsum dolor sit amte autem, lorem ipsum dolor sit amte autem',
-                    'id' => '1337'
+                    'campaign_title' => 'Test Campagin',
+                    'campaign_desc' => 'lorem ipsum dolor sit amte autem, lorem ipsum dolor sit amte autem',
+                    'campaign_creation_date' => 'xx.xx.xx',
+                    'campaign_expiration_date' => 'yy.yy.xx'
                 ]
 
             ];
