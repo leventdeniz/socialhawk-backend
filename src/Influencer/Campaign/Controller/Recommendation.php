@@ -61,10 +61,12 @@ class Recommendation
                 [
                     'campaign_id' => '1337',
                     'company' => 'Edeka',
-                    'campaign_title' => 'Test Campagin',
+                    'campaign_title' => 'Demo Campaign',
                     'campaign_desc' => 'lorem ipsum dolor sit amte autem, lorem ipsum dolor sit amte autem',
                     'campaign_creation_date' => 'xx.xx.xx',
-                    'campaign_expiration_date' => 'yy.yy.xx'
+                    'campaign_expiration_date' => 'yy.yy.xx',
+                    'campaign_hashtags' => ['beauty', 'new', 'freshsmell', 'stuff'],
+                    'campaign_thumbnail'
                 ]
 
             ];
