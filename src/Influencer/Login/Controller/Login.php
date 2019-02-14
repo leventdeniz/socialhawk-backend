@@ -33,7 +33,7 @@ class Login
 
     public function __invoke()
     {
-        
+
         if (empty($this->_request->getContent())) {
             return JsonResponse::return(false);
         }

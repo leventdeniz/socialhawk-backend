@@ -8,6 +8,8 @@
 
 namespace App\System\Core\Setup;
 
+use App\System\Core\Logger\Monolog;
+use Exception;
 use mysqli;
 use App\System\Core\Logger;
 
@@ -27,13 +29,14 @@ class Database
 
     public function __construct()
     {
-        $this->_monolog = new Logger\Monolog();
+        $this->_monolog = new Monolog();
     }
 
     /**
      * @return bool|mysqli
      */
-    public function connectToDatabase(){
+    public function connectToDatabase()
+    {
 
         try {
             $conn = new mysqli(
@@ -43,7 +46,7 @@ class Database
                 self::DATABASE_INFO['database']
             );
 
-        }catch (\Exception $e){
+        } catch (Exception $e) {
 
             $this->_monolog->critical('Not database connection possible!', ['exception' => $e]);
             return false;
