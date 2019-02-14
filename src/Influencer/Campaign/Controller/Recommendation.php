@@ -53,8 +53,8 @@ class Recommendation
         if($validate){
 
 
-            $recommendation = $this->_userRecommendation->getUserRecommendation($uid);
-            print_r($recommendation);die();
+            //$recommendation = $this->_userRecommendation->getUserRecommendation($uid);
+            //print_r($recommendation);die();
 
             $recommmendation = [
 
