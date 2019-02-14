@@ -31,7 +31,42 @@ class UserRecommendation
         }
 
         $sql = $database->prepare("
-            SELECT c.campaign_hash      AS campaign_id,
+            SELECT campaigns.id, campaigns.campaign_id, campaigns.campaign_title, campaigns.campaign_desc,  campaigns_reward.id_rewards FROM campaigns 
+            LEFT JOIN campaigns ON campaigns_reward.id_rewards = campaigns.id  
+            
+            WHERE campaigns.active=1
+        ");
+
+
+        //$sql->bind_param("ss", $a, $b);
+        //$a = $uid;
+
+        $sql->execute();
+        $result = $sql->get_result();
+
+        //user does exist
+        if ($result->num_rows > 0) {
+
+            return $result->fetch_all();
+        }
+
+        return false;
+
+    }
+
+    /**
+     * @return bool|mixed
+     */
+    public function getAllCampaigns()
+    {
+        $database = $this->_databaseConnection->connectToDatabase();
+        if ($database === false) {
+            return false;
+        }
+
+        //Todo: change thumbnail when implemented @levent
+        $sql = $database->prepare("
+            SELECT c.campaign_url_hash  AS campaign_id,
                    a.company_name       AS advertiser,
                    c.campaign_title     AS title,
                    c.campaign_desc      AS description,
@@ -55,10 +90,6 @@ class UserRecommendation
             GROUP BY c.id
         ");
 
-
-        //$sql->bind_param("ss", $a, $b);
-        //$a = $uid;
-
         $sql->execute();
         $result = $sql->get_result();
 
@@ -69,7 +100,6 @@ class UserRecommendation
         }
 
         return false;
-
     }
 
 }
