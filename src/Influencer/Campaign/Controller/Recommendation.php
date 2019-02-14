@@ -66,7 +66,30 @@ class Recommendation
                     'campaign_creation_date' => 'xx.xx.xx',
                     'campaign_expiration_date' => 'yy.yy.xx',
                     'campaign_hashtags' => ['beauty', 'new', 'freshsmell', 'stuff'],
-                    'campaign_thumbnail'
+                    'campaign_thumbnail' => ''
+                ],
+
+
+                [
+                    'campaign_id' => '2337',
+                    'company' => 'Addidas',
+                    'campaign_title' => 'Addi Demo Campaign',
+                    'campaign_desc' => 'lorem ipsum dolor sit amte autem, lorem ipsum dolor sit amte autem',
+                    'campaign_creation_date' => 'xx.xx.xx',
+                    'campaign_expiration_date' => 'yy.yy.xx',
+                    'campaign_hashtags' => ['shoe', 'sport', 'trendy', 'unisex'],
+                    'campaign_thumbnail' => ''
+                ],
+
+                [
+                    'campaign_id' => '3337',
+                    'company' => 'BMW',
+                    'campaign_title' => 'BMW Demo Campaign',
+                    'campaign_desc' => 'lorem ipsum dolor sit amte autem, lorem ipsum dolor sit amte autem',
+                    'campaign_creation_date' => 'xx.xx.xx',
+                    'campaign_expiration_date' => 'yy.yy.xx',
+                    'campaign_hashtags' => ['3er', 'Neu', 'AMK', 'BMW'],
+                    'campaign_thumbnail' => ''
                 ]
 
             ];
