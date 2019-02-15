@@ -15,93 +15,89 @@ class AllCampaigns
     /**
      * @var Database
      */
+    protected $_database;
     protected $_databaseConnection;
 
     public function __construct()
     {
-        $this->_databaseConnection = new Database();
+        $this->_database = new Database();
     }
 
     /**
-     * @param bool $prepare
      * @return array|bool|mixed
      */
-    public function getAllCampaigns($prepare = true)
+    public function getAllCampaigns()
     {
-        $database = $this->_databaseConnection->connectToDatabase();
-        if ($database === false) {
+        $conn = $this->_database->connectToDatabase();
+        if ($conn === false) {
             return false;
         }
 
         //Todo: change thumbnail when implemented @levent
-        $sql =  "
+        $result = $conn->query("
 SELECT
+    campaigns.id,
+    advertiser_users.company_name,
     campaigns.campaign_url_hash AS campaign_hash,
     campaigns.campaign_title AS title,
     campaigns.campaign_desc AS description,
     campaigns.creation_date,
     campaigns.expiration_date,
     GROUP_CONCAT(hashtags.tag) AS hashtags,
-    'https://via.placeholder.com/650x350' as thumbnail,
-    rewards.type AS rewards
-
-    
+    'https://via.placeholder.com/650x350' as thumbnail
 FROM
     campaigns
-    LEFT JOIN campaigns_rewards ON campaigns.id = campaigns_rewards.id_campaign
-    LEFT JOIN rewards ON rewards.id = campaigns_rewards.id_rewards
-    LEFT JOIN advertiser_users ON advertiser_users.id = campaigns.advertiser_id
-    LEFT JOIN campaigns_hashtags ON campaigns_hashtags.campagin_id = campaigns.id
-    LEFT JOIN hashtags ON hashtags.id = campaigns_hashtags.hashtag_id
+    LEFT JOIN advertiser_users 
+      ON advertiser_users.id = campaigns.advertiser_id
+    LEFT JOIN campaigns_hashtags 
+      ON campaigns_hashtags.campaign_id = campaigns.id
+    LEFT JOIN hashtags 
+      ON hashtags.id = campaigns_hashtags.hashtag_id
 WHERE
     campaigns.active = 1
 GROUP BY
 	campaigns.id;
-";
-        $result = $database->query($sql);
+");
+
+        // make id of campaign the key of campaigns array
+        $campaigns = [];
+        while ($campaign = $result->fetch_assoc()) {
+            $id = $campaign['id'];
+            unset($campaign['id']);
+            $campaigns[$id] = $campaign;
+            $campaigns[$id]['rewards'] = $this->getCampaignRewards($id);
+        }
 
         if ($result->num_rows > 0) {
-
-            if($prepare){
-                return $this->prepareDbResultForFrontend($result->fetch_all());
-            }
-
-            return $result->fetch_all();
+            return $campaigns;
         }
 
         return false;
     }
 
     /**
-     * This method will map the fields that we need so the frontend can work with a decent
-     * dataset.
-     *
-     * @param $dbArray
-     * @return array
+     * @param $campaignId
+     * @return bool|string
      */
-    private function prepareDbResultForFrontend($dbArray){
-
-        $returnArray = [];
-        foreach ($dbArray as $row){
-
-            $returnArray[] =  [
-                'campaign_id' => $row[0],
-                'company' => 'Edeka',
-                'campaign_title' => $row[1],
-                'campaign_desc' => $row[2],
-                'campaign_creation_date' => 'xx.xx.xx',
-                'campaign_expiration_date' => 'yy.yy.xx',
-                'campaign_hashtags' =>  $row[5],
-                'campaign_thumbnail' => $row[6],
-                'reward' => '100€'
-            ];
+    private function getCampaignRewards($campaignId)
+    {
+        $conn = $this->_database->connectToDatabase();
+        if ($conn === false) {
+            return false;
         }
 
-        print_r($returnArray);
-
-        die();
-
-        return $returnArray;
+        $rewards_sql = $conn->prepare("
+SELECT DISTINCT GROUP_CONCAT(rewards.type) as rewards_type
+FROM campaigns_rewards
+LEFT JOIN rewards
+      ON rewards.id = campaigns_rewards.rewards_id
+WHERE campaigns_rewards.campaign_id = ?
+            ");
+        $rewards_sql->bind_param("i", $a);
+        $a = $campaignId;
+        $rewards_sql->execute();
+        $rewards = $rewards_sql->get_result()->fetch_all();
+        return $rewards[0][0];
     }
 
 }

@@ -57,7 +57,6 @@ class Campaigns
         if ($validation) {
             $recommendation = $this->_allCampaigns->getAllCampaigns();
             if ($recommendation) {
-                print_r($recommendation);die();
                 return JsonResponse::return(true, $recommendation);
             }
         }
