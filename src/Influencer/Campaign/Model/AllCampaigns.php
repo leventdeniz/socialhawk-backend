@@ -66,6 +66,8 @@ GROUP BY
             unset($campaign['id']);
             $campaigns[$id] = $campaign;
             $campaigns[$id]['rewards'] = $this->getCampaignRewards($id);
+            $campaigns[$id]['description'] = utf8_encode($campaign['description']);
+            $campaigns[$id]['title'] = utf8_encode($campaign['title']);
         }
 
         if ($result->num_rows > 0) {
