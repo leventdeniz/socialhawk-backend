@@ -11,7 +11,7 @@ namespace App\Influencer\Profile\Controller;
 use App\System\Core\Helper\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Influencer\UserIdValidation\Model\UserIdValidation;
-use App\Influencer\Dashboard\Model\Profile;
+use App\Influencer\Profile\Model\Profile;
 
 class ProfilePage
 {
