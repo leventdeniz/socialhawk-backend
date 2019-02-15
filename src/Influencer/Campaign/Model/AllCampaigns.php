@@ -23,9 +23,10 @@ class AllCampaigns
     }
 
     /**
-     * @return bool|mixed
+     * @param bool $prepare
+     * @return array|bool|mixed
      */
-    public function getAllCampaigns()
+    public function getAllCampaigns($prepare = true)
     {
         $database = $this->_databaseConnection->connectToDatabase();
         if ($database === false) {
@@ -33,42 +34,74 @@ class AllCampaigns
         }
 
         //Todo: change thumbnail when implemented @levent
-        $sql =  $database->query("
+        $sql =  "
 SELECT
-  c.campaign_url_hash AS campaign_hash,
-  a.company_name AS advertiser,
-  c.campaign_title AS title,
-  c.campaign_desc AS description,
-  c.creation_date,
-  c.expiration_date,
-  GROUP_CONCAT(h.tag) AS hashtags,
-  'https://via.placeholder.com/650x350' as thumbnail,
-  r.type AS rewards
+    campaigns.campaign_url_hash AS campaign_hash,
+    campaigns.campaign_title AS title,
+    campaigns.campaign_desc AS description,
+    campaigns.creation_date,
+    campaigns.expiration_date,
+    GROUP_CONCAT(hashtags.tag) AS hashtags,
+    'https://via.placeholder.com/650x350' as thumbnail,
+    rewards.type AS rewards
+
+    
 FROM
-  campaigns AS c
-  LEFT JOIN campaigns_rewards AS c_r ON c.id = c_r.id_campaign
-  LEFT JOIN rewards AS r ON r.id = c_r.id_rewards
-  LEFT JOIN advertiser_users AS a ON a.id = c.advertiser_id
-  LEFT JOIN campaigns_hashtags AS c_h ON c_h.campagin_id = c.id
-  LEFT JOIN hashtags AS h ON h.id = c_h.hashtag_id
+    campaigns
+    LEFT JOIN campaigns_rewards ON campaigns.id = campaigns_rewards.id_campaign
+    LEFT JOIN rewards ON rewards.id = campaigns_rewards.id_rewards
+    LEFT JOIN advertiser_users ON advertiser_users.id = campaigns.advertiser_id
+    LEFT JOIN campaigns_hashtags ON campaigns_hashtags.campagin_id = campaigns.id
+    LEFT JOIN hashtags ON hashtags.id = campaigns_hashtags.hashtag_id
 WHERE
-  c.active = 1
+    campaigns.active = 1
 GROUP BY
-  c.id;
-");
+	campaigns.id;
+";
+        $result = $database->query($sql);
 
-
-
-        $sql->execute();
-        $result = $sql->get_result();
-
-        //user does exist
         if ($result->num_rows > 0) {
+
+            if($prepare){
+                return $this->prepareDbResultForFrontend($result->fetch_all());
+            }
 
             return $result->fetch_all();
         }
 
         return false;
+    }
+
+    /**
+     * This method will map the fields that we need so the frontend can work with a decent
+     * dataset.
+     *
+     * @param $dbArray
+     * @return array
+     */
+    private function prepareDbResultForFrontend($dbArray){
+
+        $returnArray = [];
+        foreach ($dbArray as $row){
+
+            $returnArray[] =  [
+                'campaign_id' => $row[0],
+                'company' => 'Edeka',
+                'campaign_title' => $row[1],
+                'campaign_desc' => $row[2],
+                'campaign_creation_date' => 'xx.xx.xx',
+                'campaign_expiration_date' => 'yy.yy.xx',
+                'campaign_hashtags' =>  $row[5],
+                'campaign_thumbnail' => $row[6],
+                'reward' => '100€'
+            ];
+        }
+
+        print_r($returnArray);
+
+        die();
+
+        return $returnArray;
     }
 
 }
