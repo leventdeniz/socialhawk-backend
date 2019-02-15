@@ -36,7 +36,7 @@ influencer_dashboard:
 influencer_profile:
     path: /influencer/profile
     methods: 'POST'
-    controller: 'App\Influencer\Profile\Controller\Dashboard'
+    controller: 'App\Influencer\Profile\Controller\ProfilePage'
 
 influencer_campaign_recommendation:
     path: /influencer/campaign/recommendation

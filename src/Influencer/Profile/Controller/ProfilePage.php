@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Influencer\UserIdValidation\Model\UserIdValidation;
 use App\Influencer\Dashboard\Model\Profile;
 
-class Dashboard
+class ProfilePage
 {
     /**
      * @var Request
@@ -63,9 +63,7 @@ class Dashboard
                 return JsonResponse::return(false);
             }
 
-            $returnData = ['profile' => $getProfileData];
-
-            return JsonResponse::return(true, $returnData);
+            return JsonResponse::return(true, $getProfileData);
         }
 
         return JsonResponse::return(false);
