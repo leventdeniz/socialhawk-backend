@@ -63,13 +63,7 @@ class Dashboard
                 return JsonResponse::return(false);
             }
 
-            $profileJson = [
-                'name' => $getProfileData[0][0],
-                'email' => $getProfileData[0][1],
-                'reg_date' => $getProfileData[0][2]
-            ];
-
-            $returnData = ['profile' => $profileJson];
+            $returnData = ['profile' => $getProfileData];
 
             return JsonResponse::return(true, $returnData);
         }
