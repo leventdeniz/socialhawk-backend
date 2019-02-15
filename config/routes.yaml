@@ -33,6 +33,11 @@ influencer_dashboard:
     methods: 'POST'
     controller: 'App\Influencer\Dashboard\Controller\Dashboard'
 
+influencer_profile:
+    path: /influencer/profile
+    methods: 'POST'
+    controller: 'App\Influencer\Profile\Controller\Dashboard'
+
 influencer_campaign_recommendation:
     path: /influencer/campaign/recommendation
     methods: 'POST'
