@@ -22,7 +22,8 @@ class Profile
         $this->_databaseConnection = new Database();
     }
 
-    public function getProfileData($uid){
+    public function getProfileData($uid)
+    {
         $database = $this->_databaseConnection->connectToDatabase();
         if ($database === false) {
             return false;

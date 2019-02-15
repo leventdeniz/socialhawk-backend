@@ -52,14 +52,14 @@ class Dashboard
 
 
         $validate = $this->_uidValidation->validateUniqueUserId($uid);
-        if($validate){
+        if ($validate) {
 
             $getProfileData = $this->_profile->getProfileData($uid);
 
             /**
              * Something really wrong happend, either the database is down or the user does not exist anymore
              */
-            if($getProfileData === false){
+            if ($getProfileData === false) {
                 return JsonResponse::return(false);
             }
 
