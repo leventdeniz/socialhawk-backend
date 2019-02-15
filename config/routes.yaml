@@ -35,8 +35,13 @@ influencer_dashboard:
 
 influencer_campaign_recommendation:
     path: /influencer/campaign/recommendation
-    methods: ['POST', 'GET']
+    methods: 'POST'
     controller: 'App\Influencer\Campaign\Controller\Recommendation'
+
+influencer_campaign_allCampaigns:
+  path: /influencer/campaign/all
+  methods: 'POST'
+  controller: 'App\Influencer\Campaign\Controller\Campaigns'
 
 influencer_import_instagram:
     path: /influencer/import/instagram

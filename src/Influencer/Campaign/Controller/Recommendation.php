@@ -21,14 +21,6 @@ class Recommendation
     protected $_uidValidation;
 
     /**
-     * ALL      -> all campaigns available
-     * FOLLOWED -> only campaigns the user is following
-     *
-     * @var string
-     */
-    protected $_currentRecommendationMode = 'ALL';
-
-    /**
      * @var Request
      */
     protected $_request;
@@ -40,9 +32,9 @@ class Recommendation
 
     public function __construct()
     {
-        $this->_request = new Request();
-        $this->_uidValidation = new UserIdValidation();
-        $this->_userRecommendation = new UserRecommendation();
+        $this->_request             = new Request();
+        $this->_uidValidation       = new UserIdValidation();
+        $this->_userRecommendation  = new UserRecommendation();
     }
 
     /**
@@ -50,37 +42,19 @@ class Recommendation
      */
     public function __invoke()
     {
-        //Todo: refactor this
-        // on should be called via:
-        // BASE_URL/campaigns with GET -> return all
-        // BASE_URL/campaigns with POST -> post uid and return only followed campaigns
-        $validate = false;
-        //var_dump($this->_request->getMethod());
-        //die();
-        if ($this->_request->isMethod('POST') ) {
-            if (empty($this->_request->getContent())) {
-                return JsonResponse::return(false);
-            }
-            $requestJson = json_decode($this->_request->getContent(), true);
-            if (!isset($requestJson['uid'])) {
-                return JsonResponse::return(false,'No uid given');
-            }
-            $uid = $requestJson['uid'];
-            $validate = $this->_uidValidation->validateUniqueUserId($uid);
-            $this->_currentRecommendationMode = 'FOLLOWED';
+        if (empty($this->_request->getContent())) {
+            return JsonResponse::return(false);
         }
 
-        if ($validate || $this->_currentRecommendationMode == 'ALL') {
+        $requestJson = json_decode($this->_request->getContent(), true);
+        $uid = $requestJson['uid'];
 
-            switch ($this->_currentRecommendationMode) {
-                case 'FOLLOWED':
-                    $recommendation = $this->_userRecommendation->getUserRecommendation($uid);
-                    break;
-                case 'ALL':
-                default:
-                $recommendation = $this->_userRecommendation->getAllCampaigns();
-            }
-            print_r($recommendation);die();
+        $validate = $this->_uidValidation->validateUniqueUserId($uid);
+        if($validate){
+
+
+            $recommendation = $this->_userRecommendation->getUserRecommendation($uid);
+            //print_r($recommendation);die();
             /*
                         $recommmendation = [
 
