@@ -53,7 +53,9 @@ class Recommendation
         if($validate){
 
 
-            $recommendation = $this->_userRecommendation->getUserRecommendation($uid);
+            //$recommendation = $this->_userRecommendation->getUserRecommendation($uid);
+            //TODO: This needs to be fixed, currently the 'getUserRecommendation' is not working
+            $recommendation = $this->_userRecommendation->getAllCampaigns();
             //print_r($recommendation);die();
             /*
                         $recommmendation = [
