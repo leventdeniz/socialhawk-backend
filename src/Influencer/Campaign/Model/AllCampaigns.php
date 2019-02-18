@@ -44,7 +44,7 @@ SELECT
     campaigns.creation_date,
     campaigns.expiration_date,
     GROUP_CONCAT(hashtags.tag) AS hashtags,
-    'https://via.placeholder.com/650x350' as thumbnail
+    'http://cdn.socialhawk.io/images/deo' as thumbnail
 FROM
     campaigns
     LEFT JOIN advertiser_users 
