@@ -46,7 +46,7 @@ class Instagram
         $requestJson = json_decode($this->_request->getContent(), true);
 
         $uid        = $requestJson['uid'];
-        $igName     = $requestJson['instagram'];
+        $igName     = $requestJson['username'];
 
         $validate = $this->_uidValidation->validateUniqueUserId($uid);
         if($validate) {
