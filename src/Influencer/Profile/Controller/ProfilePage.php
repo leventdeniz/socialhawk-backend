@@ -49,7 +49,6 @@ class ProfilePage
         $requestJson = json_decode($this->_request->getContent(), true);
 
         $uid = $requestJson['uid'];
-
         $validate = $this->_uidValidation->validateUniqueUserId($uid);
         if ($validate) {
 

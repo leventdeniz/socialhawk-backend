@@ -43,8 +43,7 @@ SELECT
     campaigns.campaign_desc AS description,
     campaigns.creation_date,
     campaigns.expiration_date,
-    GROUP_CONCAT(hashtags.tag) AS hashtags,
-    'http://cdn.socialhawk.io/images/deo' as thumbnail
+    GROUP_CONCAT(hashtags.tag) AS hashtags
 FROM
     campaigns
     LEFT JOIN advertiser_users 
@@ -66,6 +65,7 @@ GROUP BY
             unset($campaign['id']);
             $campaigns[$id] = $campaign;
             $campaigns[$id]['rewards'] = $this->getCampaignRewards($id);
+            $campaigns[$id]['thumbnail'] = $this->getCampaignThumbnail($id);
             $campaigns[$id]['description'] = utf8_encode($campaign['description']);
             $campaigns[$id]['title'] = utf8_encode($campaign['title']);
         }
@@ -100,6 +100,29 @@ WHERE campaigns_rewards.campaign_id = ?
         $rewards_sql->execute();
         $rewards = $rewards_sql->get_result()->fetch_all();
         return $rewards[0][0];
+    }
+
+    /**
+     * @param $campaignId
+     * @return bool
+     */
+    private function getCampaignThumbnail($campaignId)
+    {
+        $conn = $this->_database->connectToDatabase();
+        if ($conn === false) {
+            return false;
+        }
+
+        $thumbnail_sql = $conn->prepare("
+        SELECT thumbnails FROM campaigns_images WHERE campaign_id = ?;
+        ");
+
+        $thumbnail_sql->bind_param("i", $a);
+        $a = $campaignId;
+        $thumbnail_sql->execute();
+        $thumbnail = $thumbnail_sql->get_result()->fetch_all();
+        return $thumbnail[0][0];
+
     }
 
 }
