@@ -22,16 +22,34 @@ class InstagramImport
         $this->_databaseConnection = new Database();
     }
 
-    /**
-     * @param $uid
-     * @param $instaAccountName
-     * @return bool
-     */
+
+    private function checkIfInstaAccountExist($instaName){
+
+        $database = $this->_databaseConnection->connectToDatabase();
+
+        $sql = $database->prepare("
+            SELECT username FROM influencer_instagram WHERE username=?
+        ");
+
+        $sql->bind_param("s", $a);
+        $a = $instaName;
+
+        $sql->execute();
+        $result = $sql->get_result();
+
+        //user does exist
+        if ($result->num_rows === 1) {
+            return true;
+        }
+        return false;
+    }
+
+
     public function importUser($uid, $instaAccountName)
     {
         $database = $this->_databaseConnection->connectToDatabase();
         if ($database === false) {
-            return false;
+            return ['success' => false, 'content' => 'Technical problems'];
         }
 
         $userId = $this->getUserIdByUid($uid);
@@ -40,6 +58,27 @@ class InstagramImport
         if ($userId > 0) {
 
             $instaData = $this->fetchIgAccountJson($instaAccountName);
+
+            /**
+             * If the user account does not exist, instagram will return a 404 status.
+             */
+            if(!$instaData){
+                return ['success' => false, 'content' => 'Account does not exist'];
+            }
+
+            /**
+             * Check of the user account is private or not.
+             */
+            if($instaData['graphql']['user']['is_private'] == true){
+                return ['success' => false, 'content' => 'Your account is private.'];
+            }
+
+            /**
+             * Check if there is already a user with the same account
+             */
+            if($this->checkIfInstaAccountExist($instaAccountName)){
+                return ['success' => false, 'content' => 'Instagram account already exist'];
+            }
 
             $sql = $database->prepare("
             INSERT INTO influencer_instagram(id_influencer, username, biography, followed_by, category, profile_pic_url, full_name)
@@ -58,11 +97,11 @@ class InstagramImport
 
             $insert = $sql->execute();
             if ($insert === true) {
-                return true;
+                return ['success' => true, 'content' => 'Import success'];
             }
         }
 
-        return false;
+        return ['success' => false, 'content' => 'User does not exist'];
     }
 
     /**
@@ -72,7 +111,13 @@ class InstagramImport
     public function fetchIgAccountJson($username)
     {
         $url     = sprintf("https://www.instagram.com/$username");
-        $content = file_get_contents($url);
+
+        try{
+            $content = file_get_contents($url);
+        }catch (\Exception $e){
+            return false;
+        }
+
         $content = explode("window._sharedData = ", $content)[1];
         $content = explode(";</script>", $content)[0];
         $data    = json_decode($content, true);

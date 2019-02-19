@@ -56,18 +56,29 @@ class Instagram
 
             $importData = $this->_instagramImport->importUser($uid, $igName);
 
-            if ($importData) {
+            /**
+             * If everything is alright, we get a success -> true
+             */
+            if ($importData['success']) {
                 return JsonResponse::return(
-                    true,
-                    'Import successful'
+                    $importData['success'],
+                    $importData['content']
                 );
             }
+
+            /**
+             * Something went wront, so we deliver success -> false and the message of the error
+             */
+            return JsonResponse::return(
+                $importData['success'],
+                $importData['content']
+            );
 
         }
 
         return JsonResponse::return(
             false,
-            'Import failed'
+            'User does not exist'
         );
     }
 
