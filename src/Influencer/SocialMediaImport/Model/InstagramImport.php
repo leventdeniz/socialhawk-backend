@@ -23,7 +23,12 @@ class InstagramImport
     }
 
 
-    private function checkIfInstaAccountExist($instaName){
+    /**
+     * @param $instaName
+     * @return bool
+     */
+    private function checkIfInstaAccountExist($instaName)
+    {
 
         $database = $this->_databaseConnection->connectToDatabase();
 
@@ -62,21 +67,21 @@ class InstagramImport
             /**
              * If the user account does not exist, instagram will return a 404 status.
              */
-            if(!$instaData){
+            if (!$instaData) {
                 return ['success' => false, 'content' => 'Account does not exist'];
             }
 
             /**
              * Check of the user account is private or not.
              */
-            if($instaData['graphql']['user']['is_private'] == true){
-                return ['success' => false, 'content' => 'Your account is private.'];
+            if ($instaData['graphql']['user']['is_private'] == true) {
+                return ['success' => false, 'content' => 'Your account is private'];
             }
 
             /**
              * Check if there is already a user with the same account
              */
-            if($this->checkIfInstaAccountExist($instaAccountName)){
+            if ($this->checkIfInstaAccountExist($instaAccountName)) {
                 return ['success' => false, 'content' => 'Instagram account already exist'];
             }
 
@@ -110,11 +115,11 @@ class InstagramImport
      */
     public function fetchIgAccountJson($username)
     {
-        $url     = sprintf("https://www.instagram.com/$username");
+        $url = sprintf("https://www.instagram.com/$username");
 
-        try{
+        try {
             $content = file_get_contents($url);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return false;
         }
 
