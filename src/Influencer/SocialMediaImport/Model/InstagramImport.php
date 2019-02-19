@@ -17,6 +17,19 @@ class InstagramImport
      */
     protected $_databaseConnection;
 
+    const RESPONSE_DATABASE_FAILURE = 'Technical problems';
+
+    const RESPONSE_INSTAGRAM_ACCOUNT_NOT_EXIST = 'Account does not exist';
+
+    const RESPONSE_INSTAGRAM_ACCOUNT_IS_PRIVATE = 'Your account is private';
+
+    const RESPONSE_INSTAGRA_ACCOUNT_EXIST_IN_TABLE = 'Instagram account already exist';
+
+    const RESPONSE_IMPORT_SUCCESS = 'Import success';
+
+    const RESPONSE_USER_NOT_EXIST = 'User does not exist';
+
+
     public function __construct()
     {
         $this->_databaseConnection = new Database();
@@ -54,7 +67,7 @@ class InstagramImport
     {
         $database = $this->_databaseConnection->connectToDatabase();
         if ($database === false) {
-            return ['success' => false, 'content' => 'Technical problems'];
+            return ['success' => false, 'content' => self::RESPONSE_DATABASE_FAILURE];
         }
 
         $userId = $this->getUserIdByUid($uid);
@@ -68,21 +81,21 @@ class InstagramImport
              * If the user account does not exist, instagram will return a 404 status.
              */
             if (!$instaData) {
-                return ['success' => false, 'content' => 'Account does not exist'];
+                return ['success' => false, 'content' => self::RESPONSE_INSTAGRAM_ACCOUNT_NOT_EXIST];
             }
 
             /**
              * Check of the user account is private or not.
              */
             if ($instaData['graphql']['user']['is_private'] == true) {
-                return ['success' => false, 'content' => 'Your account is private'];
+                return ['success' => false, 'content' => self::RESPONSE_INSTAGRAM_ACCOUNT_IS_PRIVATE];
             }
 
             /**
              * Check if there is already a user with the same account
              */
             if ($this->checkIfInstaAccountExist($instaAccountName)) {
-                return ['success' => false, 'content' => 'Instagram account already exist'];
+                return ['success' => false, 'content' => self::RESPONSE_INSTAGRA_ACCOUNT_EXIST_IN_TABLE];
             }
 
             $sql = $database->prepare("
@@ -102,11 +115,11 @@ class InstagramImport
 
             $insert = $sql->execute();
             if ($insert === true) {
-                return ['success' => true, 'content' => 'Import success'];
+                return ['success' => true, 'content' => self::RESPONSE_IMPORT_SUCCESS];
             }
         }
 
-        return ['success' => false, 'content' => 'User does not exist'];
+        return ['success' => false, 'content' => self::RESPONSE_USER_NOT_EXIST];
     }
 
     /**
