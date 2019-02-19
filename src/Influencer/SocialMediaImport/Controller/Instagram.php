@@ -40,27 +40,35 @@ class Instagram
     public function __invoke()
     {
         if (empty($this->_request->getContent())) {
-            return JsonResponse::return(false);
+            return JsonResponse::return(
+                false,
+                'No JSON request content'
+            );
         }
 
         $requestJson = json_decode($this->_request->getContent(), true);
 
-        $uid        = $requestJson['uid'];
-        $igName     = $requestJson['igUsername'];
+        $uid = $requestJson['uid'];
+        $igName = $requestJson['igUsername'];
 
         $validate = $this->_uidValidation->validateUniqueUserId($uid);
-        if($validate) {
+        if ($validate) {
 
             $importData = $this->_instagramImport->importUser($uid, $igName);
 
-            if($importData){
-                return JsonResponse::return(true);
+            if ($importData) {
+                return JsonResponse::return(
+                    true,
+                    'Import successful'
+                );
             }
 
         }
 
-
-        return JsonResponse::return(false);
+        return JsonResponse::return(
+            false,
+            'Import failed'
+        );
     }
 
 }
