@@ -63,6 +63,7 @@ AND influencer_users.active=1
         } else if ($result->num_rows > 1) {
             //something really wrong happened, UID exist more than once
             //$this->_monolog->error('USER ID / EMAIL EXIST MORE THAN ONCE: ' . $email);
+            //todo: add logging @kian
             return false;
         }
 
