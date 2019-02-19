@@ -50,14 +50,14 @@ class ProfilePage
 
         $uid = $requestJson['uid'];
 
-
         $validate = $this->_uidValidation->validateUniqueUserId($uid);
         if ($validate) {
 
             $getProfileData = $this->_profile->getProfileData($uid);
 
             /**
-             * Something really wrong happend, either the database is down or the user does not exist anymore
+             * Something really wrong happened, either the database is down or the user does not exist anymore
+             * Then todo: add error logging @kian
              */
             if ($getProfileData === false) {
                 return JsonResponse::return(false);
