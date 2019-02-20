@@ -37,7 +37,8 @@ SELECT
     influencer_instagram.username AS ig_username,
     influencer_instagram.category AS ig_category,
     influencer_instagram.followed_by AS ig_follower_count,
-    influencer_instagram.profile_pic_url AS ig_profile_pic_url
+    influencer_instagram.profile_pic_url AS ig_profile_pic_url,
+    influencer_instagram.biography AS ig_biography
 
 FROM 
   influencer_users 
